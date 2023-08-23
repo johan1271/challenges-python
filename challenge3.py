@@ -1,6 +1,7 @@
 """Dado dos diccionarios 1 de productos y el 2 de categoría, conocer un 3 que permita tener el nombre del producto y el nombre de su categoría ejemplo.
 """
 # Dictionary for categories
+
 categories = {
     101: {
         "id": 101,
@@ -12,7 +13,7 @@ categories = {
     }
 }
 
-# Dictionary for products
+# Dictionary of products
 products = {
     1: {
         "id": 1,
@@ -28,33 +29,28 @@ products = {
     }
 }
 
+# Dictionary to store matching products and categories
+matching_products = {}
 
-# Function to get the name of a product and its category
-def get_product_and_category(product_id):
-    try:
-        # Convert input to integer
-        product_id = int(product_id)
-        
-        # Check if the product exists
-        if product_id not in products:
-            return "Product not found"
-        
-        # Get the product
-        product = products[product_id]
-        
-        # Get the category
-        category = categories[product["id_cat"]]
-        
-        # Return the product and category names using f-strings
-        return f"Product: {product['name']}\nCategory: {category['name']}"
+# Iterate through the products
+for product_id, product_info in products.items():
     
-    except ValueError:
-        return "Invalid input. Please enter a valid product ID."
+    product_category_id = product_info["id_cat"]
+    
+    if product_category_id in categories:
+        category_name = categories[product_category_id]["name"]
+        product_name = product_info["name"]
+        
+        # Add the product and category to the matching dictionary
+        matching_products[product_id] = {
+            "product": product_name,
+            "category": category_name
+        }
 
-
-product_id = input("Enter the product ID: ")
-print(get_product_and_category(product_id))
-
+# Print the matching products and categories dictionary
+print("Matching Products and Categories:")
+for product_id, details in matching_products.items():
+    print(f"Product ID: {product_id}, Product: {details['product']}, Category: {details['category']}")
 
 
 
